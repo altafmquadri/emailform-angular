@@ -1,19 +1,35 @@
-<form #emailForm="ngForm">
-  <!-- () [] represents two -way binding -->
-  <input
-    type="email"
-    pattern=".+@.+\..+"
-    required
-    name="email"
-    [(ngModel)]="email"
-    #emailControl="ngModel"
-  />
-  <ng-container *ngIf="emailControl?.invalid && emailControl.touched">
-    <div *ngIf="emailControl.errors.required">You must enter an email</div>
-    <div *ngIf="emailControl.errors.pattern">Please enter a valid email</div>
-  </ng-container>
-</form>
-<hr />
-<div>Is form valid: {{ emailForm.valid }}</div>
-<div>Form values: {{ emailForm.value | json }}</div>
-<div>Email validiation errors: {{ emailControl?.errors | json }}</div>
+<div class="container">
+  <form (ngSubmit)="onSubmit()" #emailForm="ngForm">
+    <!-- () [] represents two -way binding -->
+    <label class="label">Enter Email</label>
+    <div class="field">
+      <input
+        class="input"
+        type="email"
+        pattern=".+@.+\..+"
+        required
+        name="email"
+        [(ngModel)]="email"
+        #emailControl="ngModel"
+        [ngClass]="{
+          'is-danger': emailControl?.invalid && emailControl.touched
+        }"
+      />
+      <ng-container *ngIf="emailControl?.invalid && emailControl.touched">
+        <div class="help is-danger" *ngIf="emailControl.errors.required">
+          You must enter an email
+        </div>
+        <div class="help is-danger" *ngIf="emailControl.errors.pattern">
+          Please enter a valid email
+        </div>
+      </ng-container>
+    </div>
+    <button class="button is-primary" [disabled]="emailForm.invalid">
+      Submit
+    </button>
+  </form>
+  <hr />
+  <div>Is form valid: {{ emailForm.valid }}</div>
+  <div>Form values: {{ emailForm.value | json }}</div>
+  <div>Email validiation errors: {{ emailControl?.errors | json }}</div>
+</div>
