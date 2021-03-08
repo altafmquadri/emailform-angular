@@ -6,23 +6,14 @@
     required
     name="email"
     [(ngModel)]="email"
+    #emailControl="ngModel"
   />
-  <ng-container
-    *ngIf="
-      emailForm.controls.email?.invalid && emailForm.controls.email.touched
-    "
-  >
-    <div *ngIf="emailForm.controls.email.errors.required">
-      You must enter an email
-    </div>
-    <div *ngIf="emailForm.controls.email.errors.pattern">
-      Please enter a valid email
-    </div>
+  <ng-container *ngIf="emailControl?.invalid && emailControl.touched">
+    <div *ngIf="emailControl.errors.required">You must enter an email</div>
+    <div *ngIf="emailControl.errors.pattern">Please enter a valid email</div>
   </ng-container>
 </form>
 <hr />
 <div>Is form valid: {{ emailForm.valid }}</div>
 <div>Form values: {{ emailForm.value | json }}</div>
-<div>
-  Email validiation errors: {{ emailForm.controls.email?.errors | json }}
-</div>
+<div>Email validiation errors: {{ emailControl?.errors | json }}</div>
