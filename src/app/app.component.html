@@ -1,8 +1,24 @@
 <form #emailForm="ngForm">
   <!-- () [] represents two -way binding -->
-  <input type="email" 
-  pattern=".+@.+\..+"
-  required name="email" [(ngModel)]="email" />
+  <input
+    type="email"
+    pattern=".+@.+\..+"
+    required
+    name="email"
+    [(ngModel)]="email"
+  />
+  <ng-container
+    *ngIf="
+      emailForm.controls.email?.invalid && emailForm.controls.email.touched
+    "
+  >
+    <div *ngIf="emailForm.controls.email.errors.required">
+      You must enter an email
+    </div>
+    <div *ngIf="emailForm.controls.email.errors.pattern">
+      Please enter a valid email
+    </div>
+  </ng-container>
 </form>
 <hr />
 <div>Is form valid: {{ emailForm.valid }}</div>
